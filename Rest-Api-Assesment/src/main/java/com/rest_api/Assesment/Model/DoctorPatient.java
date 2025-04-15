@@ -22,6 +22,11 @@ public class DoctorPatient {
     @ManyToOne 
     private Patient patient;
 
+    
+	public DoctorPatient() {
+		super(); 
+	}
+
 	public DoctorPatient(Doctor doctor, Patient patient) {
 		this.doctor=doctor;
 		this.patient=patient;

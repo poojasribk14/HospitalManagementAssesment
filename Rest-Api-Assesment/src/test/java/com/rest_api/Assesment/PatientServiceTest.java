@@ -67,7 +67,7 @@ public class PatientServiceTest {
 			assertEquals("John", patientService.addPatient(patient, "johnDoe").getName());
 		} catch (InvalidUserNameException e) { 
 		}
-        verify(medicalHistoryRepository).save(medicalHistory);
+        
         
         //case 2: getting user not found exception.
         

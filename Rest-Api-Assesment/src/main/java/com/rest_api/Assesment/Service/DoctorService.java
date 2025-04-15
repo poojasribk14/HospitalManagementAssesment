@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ public class DoctorService {
 
 	@Autowired
 	private AuthRepository authRepository;
+	
+	Logger logger = LoggerFactory.getLogger(DoctorService.class);
 
 	// adding a doctor
 	public Doctor addDoctor(Doctor doctor, String username) {
@@ -36,25 +40,28 @@ public class DoctorService {
 			doctor.setUser(user);
 		// if doctor is not null then add.
 		if (doctor.getUser() != null && doctor.getName() != null)
+			logger.info("Doctor {} added successfully", doctor.getName());
 			return doctorRepository.save(doctor);
-		return null;
+		
 	}
 
 	public List<Patient> getPatientsByDoctorId(int doctorId) throws InvalidIDException {
 
 		//checking if my doctor id is there or not
 		Optional<Doctor> optional = doctorRepository.findById(doctorId);
-		if (optional.isEmpty())
+		if (optional.isEmpty()) {
+			logger.warn("Invalid doctor ID: {}. No doctor found.", doctorId);
 			throw new InvalidIDException("Doctor Id is inavlid!!!");
-
+		}
 		//storing the doctor details in the doctor object.
 		Doctor doctor = optional.get();
+		logger.info("Doctor found: {}", doctor);
 
 		//storing the list of doctor patients details by the doctor object.
 		List<DoctorPatient> doctorPatients = doctorPatientRepository.findByDoctor(doctor);
 
-		//generating a list of patients for the doctor id given by fetching from
-		//doctorPatients repository.
+		//generating a list of patients for the doctor id given,
+		//by fetching from doctorPatients repository.
 		List<Patient> patients = new ArrayList<>();
 		doctorPatients.forEach(dp -> patients.add(dp.getPatient()));
 
