@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "bf87e212-e1f1-40ae-b2b3-2b814a201395",
+		"name": "Rest-Api-Assesment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43521949",
+		"_collection_link": "https://poojasri-1777048.postman.co/workspace/Pooja-Sri's-Workspace~2bc9dec9-29a5-45a6-82fa-74774a37e7ac/collection/43521949-bf87e212-e1f1-40ae-b2b3-2b814a201395?action=share&source=collection_link&creator=43521949"
+	},
+	"item": [
+		{
+			"name": "localhost:8081/api/auth/signup",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"justin\",\r\n    \"password\":\"justin\",\r\n    \"role\":\"DOCTOR\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8081/api/auth/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/auth/token/generate",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"emma\",\r\n    \"password\":\"emma\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8081/api/auth/token/generate"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/auth/login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2UiLCJleHAiOjE3NDQ3Nzk5NDYsImlhdCI6MTc0NDY5MzU0Nn0.xTMbUZ1vOBsia40sHj18O-put2EFYiQfWuz1a91eOzE "
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "localhost:8081/api/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/doctor/add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoZW5uYSIsImV4cCI6MTc0NDc4NDQyNSwiaWF0IjoxNzQ0Njk4MDI1fQ.euLYaVuFjr7A8xE0M3mT8IukPqej7YD51hfaMfg_Aiw"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Dr. Henna\",\r\n  \"speciality\": \"GYNAC\",\r\n  \"user\": {\r\n    \"username\": \"henna\",\r\n    \"password\": \"henna\",\r\n    \"email\": \"henna@example.com\",\r\n    \"role\": \"doctor\"\r\n  }\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8081/api/doctor/add"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/patient/add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdXN0aW4iLCJleHAiOjE3NDQ3ODQ4NzAsImlhdCI6MTc0NDY5ODQ3MH0.Pde13gQIIP8_2oQZ_pWdARHihL27imRTlcvlnKD2Sn0"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"justin\",\r\n  \"age\": 26,\r\n  \"medicalHistory\": {\r\n    \"illness\": \"Asthma\",\r\n    \"numOfYears\": 4,\r\n    \"currentMedication\": \"Inhaler (Salbutamol)\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8081/api/patient/add"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/patient/appointment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n  \"doctor\": {\r\n    \"id\": 3\r\n  },\r\n  \"patient\": {\r\n    \"id\": 3\r\n  },\r\n  \"appointmentDate\": \"2025-04-18\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8081/api/patient/appointment"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/doctor/patients/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbW1hIiwiZXhwIjoxNzQ0Nzg2MTYzLCJpYXQiOjE3NDQ2OTk3NjN9.XAhD5YUCx8o5xDQz_HOE_jncVWrRNMQd_l9VpK1f7_0"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8081/api/doctor/patients/3"
+			},
+			"response": []
+		}
+	]
+}
