@@ -27,23 +27,12 @@ public class DoctorService {
 	@Autowired
 	private DoctorRepository doctorRepository;
 
-	@Autowired
-	private AuthRepository authRepository;
+	 
+	 
 	
 	Logger logger = LoggerFactory.getLogger(DoctorService.class);
 
-	// adding a doctor
-	public Doctor addDoctor(Doctor doctor, String username) {
-
-		User user = authRepository.findByUsername(username);
-		if (user != null)
-			doctor.setUser(user);
-		// if doctor is not null then add.
-		if (doctor.getUser() != null && doctor.getName() != null)
-			logger.info("Doctor {} added successfully", doctor.getName());
-			return doctorRepository.save(doctor);
-		
-	}
+ 
 
 	public List<Patient> getPatientsByDoctorId(int doctorId) throws InvalidIDException {
 
@@ -62,9 +51,20 @@ public class DoctorService {
 
 		//generating a list of patients for the doctor id given,
 		//by fetching from doctorPatients repository.
-		List<Patient> patients = new ArrayList<>();
-		doctorPatients.forEach(dp -> patients.add(dp.getPatient()));
+		List<Patient> patients = new ArrayList<>(); 
+		
+		for (DoctorPatient dp : doctorPatients) {
+		    patients.add(dp.getPatient());
+		}
 
 		return patients;
 	}
+
+
+
+//	public Doctor getDoctor(String username) { 
+//		
+//		Doctor doctor = doctorRepository.getDoctorByUsername(username);
+//		return doctor;
+//	}
 }

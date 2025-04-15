@@ -3,6 +3,7 @@ package com.rest_api.Assesment;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import com.rest_api.Assesment.Exception.InvalidIDException;
 import com.rest_api.Assesment.Exception.InvalidUserNameException;
 import com.rest_api.Assesment.Model.*;
 import com.rest_api.Assesment.Repository.*;
@@ -56,32 +57,33 @@ public class PatientServiceTest {
     }
 
     @Test
-    //test case for adding patients
-    void addPatient() {
-    	//case 1: geeting correct output.
-        // Mocking to get the desired output.
-        when(authRepository.findByUsername("johnDoe")).thenReturn(user);
+    void addPatientTest() {
+        // Case 1: Patient added successfully (no existing user)
+
+        // Setup: Assume getUser() returns a mock User object
+        when(patient.getUser()).thenReturn(user);
+        when(patientRepository.findByUser(user)).thenReturn(null); // user does not exist
+        when(medicalHistoryRepository.save(patient.getMedicalHistory())).thenReturn(patient.getMedicalHistory());
         when(patientRepository.save(patient)).thenReturn(patient);
- 
-        try {
-			assertEquals("John", patientService.addPatient(patient, "johnDoe").getName());
-		} catch (InvalidUserNameException e) { 
-		}
-        
-        
-        //case 2: getting user not found exception.
-        
-        when(authRepository.findByUsername("pooja")).thenReturn(null);
 
         try {
-			assertNotEquals("John", patientService.addPatient(patient, "pooja").getName());
-		} catch (InvalidUserNameException e) { 
-			assertEquals("User Name Already Exists...", e.getMessage());
-		}
- 
+            String result = patientService.addPatient(patient);
+            assertEquals("Patient added successfully", result);
+        } catch (InvalidIDException e) {
+            fail("Exception should not have been thrown");
+        }
+
+        // Case 2: Patient with same user already exists
+        when(patientRepository.findByUser(user)).thenReturn(patient); // user already exists
+
+        try {
+            patientService.addPatient(patient);
+            fail("Expected InvalidIDException to be thrown");
+        } catch (InvalidIDException e) {
+            assertEquals("userId already exist", e.getMessage());
+        }
     }
 
-     
 
     @Test
     void bookAppointment() {
