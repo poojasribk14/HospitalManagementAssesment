@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rest_api.Assesment.Exception.InvalidUserNameException;
 import com.rest_api.Assesment.Model.DoctorPatient;
 import com.rest_api.Assesment.Model.Patient;
 import com.rest_api.Assesment.Service.PatientService;
@@ -21,7 +22,7 @@ public class PatientController {
 	private PatientService patientService;
 
 	@PostMapping("/add")
-	public ResponseEntity<Patient> addPatient(@RequestBody Patient patient, Principal principal) {
+	public ResponseEntity<Patient> addPatient(@RequestBody Patient patient, Principal principal) throws InvalidUserNameException {
 		String username= principal.getName(); 
 		Patient savedPatient = patientService.addPatient(patient, username);
         return ResponseEntity.ok(savedPatient); 

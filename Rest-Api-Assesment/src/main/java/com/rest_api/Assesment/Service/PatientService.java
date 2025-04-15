@@ -3,6 +3,7 @@ package com.rest_api.Assesment.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rest_api.Assesment.Exception.InvalidUserNameException;
 import com.rest_api.Assesment.Model.DoctorPatient;
 import com.rest_api.Assesment.Model.MedicalHistory;
 import com.rest_api.Assesment.Model.Patient;
@@ -20,7 +21,7 @@ public class PatientService {
 	@Autowired
 	private PatientRepository patientRepository; 
 	@Autowired
-	private DoctorPatientRepository appointmentRepository;
+	private DoctorPatientRepository doctorPatientRepository;
 	
 	@Autowired
 	private MedicalHistoryRepository medicalHistoryRepository;
@@ -28,11 +29,11 @@ public class PatientService {
 	private AuthRepository authRepository;
 
 	@Transactional
-	public Patient addPatient(Patient patient, String username) {
+	public Patient addPatient(Patient patient, String username) throws InvalidUserNameException {
 		
 		User user = authRepository.findByUsername(username);
-		if (user == null) { 
-	        throw new RuntimeException("User not found: " + username);
+		if (user == null) {  
+			throw new InvalidUserNameException("User Name Already Exists...");
 	    }
  
 		//getting the medical history from the passed patient object
@@ -50,7 +51,7 @@ public class PatientService {
 	}
 
 	public String bookAppointment(DoctorPatient doctorPatient) {
-		appointmentRepository.save(doctorPatient);
+		doctorPatientRepository.save(doctorPatient);
 		return "Appointment Booked Successfully!";
 	}
 }

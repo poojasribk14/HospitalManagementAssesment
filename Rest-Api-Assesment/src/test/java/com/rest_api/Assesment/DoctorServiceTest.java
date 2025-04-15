@@ -90,7 +90,7 @@ public class DoctorServiceTest {
     }
     
     @Test
-    public void testGetPatientsByDoctorId() throws InvalidIDException {
+    public void getPatientsByDoctorId() throws InvalidIDException {
         // Case 1: Getting the correct output
         List<DoctorPatient> doctorPatients = Arrays.asList(doctorPatient1, doctorPatient2);
         
@@ -98,9 +98,6 @@ public class DoctorServiceTest {
         when(doctorRepository.findById(1)).thenReturn(Optional.of(doctor));
         when(doctorPatientRepository.findByDoctor(doctor)).thenReturn(doctorPatients);
 
-        
-
-        // Assertions
         assertEquals(2, doctorService.getPatientsByDoctorId(1).size());   
         // Create expected list of patients based on doctor-patient mapping
         List<Patient> expectedPatients = Arrays.asList(patient1, patient2);
@@ -108,7 +105,7 @@ public class DoctorServiceTest {
         // Call service and capture the actual output
         List<Patient> actualPatients = doctorService.getPatientsByDoctorId(1);
 
-        // Assert that the list returned from the service matches the expected patients
+        // Checking that the list returned from the service matches the expected patients
         assertEquals(expectedPatients, actualPatients);
         
         // Case 2: Doctor ID does not exist, should throw InvalidIDException
